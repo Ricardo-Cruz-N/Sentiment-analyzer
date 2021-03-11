@@ -28,4 +28,18 @@ def init():
     )
     data = train_data
     # remove the headers that we are not going to use
+    # axis=1 remove columns
+    # inplace makes the variable data be overwritten
     data.drop(['id', 'date', 'query', 'user'], axis=1, inplace=True)
+
+    def clean_tweet(tweet):
+        tweet = BeautifulSoup(tweet).get_text()
+        # Remove the @ and its mention
+        tweet = re.sub(r"@[A-Za-z0-9]+", ' ', tweet)
+        # Remove the links of URLs
+        tweet = re.sub(r"https?://[A-Za-z0-9./]+", ' ', tweet)
+        # Nos quedamos solamente con los caracteres
+        tweet = re.sub(r"[^a-zA-Z.!?']", ' ', tweet)
+        # Remove extra blanks
+        tweet = re.sub(r" +", ' ', tweet)
+        return tweet
