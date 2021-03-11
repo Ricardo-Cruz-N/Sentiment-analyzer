@@ -1,2 +1,3 @@
+from analyzer import init
 def run():
-    print('todo ok')
+    init()
